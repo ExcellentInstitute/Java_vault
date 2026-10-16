@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Java Code Vault - Excellent Institute</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="vault-header">
+        <div class="brand-box">
+            <h1>Java Code Vault</h1>
+            <p>Excellent Institute • Offline IDE Template Library</p>
+        </div>
+        <button class="refresh-btn" onclick="window.location.reload(true)">↻ Refresh</button>
+    </header>
+
+    <div class="search-bar-container">
+        <input type="text" id="searchInput" placeholder="Search Java programs (e.g., Scanner, Loop, Array)..." onkeyup="filterVaultCards()">
+    </div>
+
+    <div class="category-tabs">
+        <button class="tab-btn active" onclick="filterCategory('all')">All</button>
+        <button class="tab-btn" onclick="filterCategory('basics')">Basics</button>
+        <button class="tab-btn" onclick="filterCategory('loops')">Loops</button>
+        <button class="tab-btn" onclick="filterCategory('patterns')">Patterns</button>
+        <button class="tab-btn" onclick="filterCategory('arrays')">Arrays</button>
+        <button class="tab-btn" onclick="filterCategory('oop')">OOP</button>
+    </div>
+
+    <main class="vault-grid" id="vaultGrid">
+        <!-- Card 1: Basics -->
+        <div class="vault-card" data-category="basics" data-keywords="scanner input output welcome">
+            <div class="card-meta">
+                <span class="badge basics">Basics</span>
+                <span class="author">Excellent Institute</span>
+            </div>
+            <h3>1. Interactive Scanner Input</h3>
+            <p>Demonstrates importing Scanner, reading user string input, and printing concatenated results.</p>
+            <button class="load-btn" onclick="loadTemplate('BasicsScanner')">Load into IDE ➔</button>
+        </div>
+
+        <!-- Card 2: Loops -->
+        <div class="vault-card" data-category="loops" data-keywords="for loop while multiplication table">
+            <div class="card-meta">
+                <span class="badge loops">Loops</span>
+                <span class="author">Excellent Institute</span>
+            </div>
+            <h3>2. Multiplication Table</h3>
+            <p>Generates a mathematical multiplication table using a standard Java for-loop.</p>
+            <button class="load-btn" onclick="loadTemplate('MultiplicationTable')">Load into IDE ➔</button>
+        </div>
+
+        <!-- Card 3: Patterns -->
+        <div class="vault-card" data-category="patterns" data-keywords="star pyramid triangle pattern nested loop">
+            <div class="card-meta">
+                <span class="badge patterns">Patterns</span>
+                <span class="author">Excellent Institute</span>
+            </div>
+            <h3>3. Star Triangle Pyramid</h3>
+            <p>Classic nested for-loop exercise printing a right-angled star triangle pattern.</p>
+            <button class="load-btn" onclick="loadTemplate('StarPattern')">Load into IDE ➔</button>
+        </div>
+
+        <!-- Card 4: Arrays -->
+        <div class="vault-card" data-category="arrays" data-keywords="array search max min statistics">
+            <div class="card-meta">
+                <span class="badge arrays">Arrays</span>
+                <span class="author">Excellent Institute</span>
+            </div>
+            <h3>4. Find Max & Min in Array</h3>
+            <p>Iterates through an integer array to find the highest and lowest values.</p>
+            <button class="load-btn" onclick="loadTemplate('ArrayMaxMin')">Load into IDE ➔</button>
+        </div>
+
+        <!-- Card 5: OOP -->
+        <div class="vault-card" data-category="oop" data-keywords="oop class object student constructor">
+            <div class="card-meta">
+                <span class="badge oop">OOP</span>
+                <span class="author">Excellent Institute</span>
+            </div>
+            <h3>5. Student Class & Object</h3>
+            <p>Object-oriented programming demonstration using constructors, fields, and display methods.</p>
+            <button class="load-btn" onclick="loadTemplate('StudentOOP')">Load into IDE ➔</button>
+        </div>
+    </main>
+
+    <footer class="vault-footer">
+        <p>© 2026 Excellent Institute, Surada. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
