@@ -1,0 +1,231 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    background-color: #0F172A;
+    color: #F8FAFC;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Header Section */
+.vault-header {
+    background-color: #1E293B;
+    border-bottom: 1px solid #334155;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand-box h1 {
+    color: #F8FAFC;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.brand-box p {
+    color: #38BDF8;
+    font-family: monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.refresh-btn {
+    background-color: #334155;
+    border: 1px solid #475569;
+    border-radius: 8px;
+    color: #38BDF8;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 8px 12px;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.refresh-btn:active {
+    background-color: #475569;
+    transform: scale(0.96);
+}
+
+/* Search Bar */
+.search-bar-container {
+    padding: 14px 16px 8px 16px;
+}
+
+#searchInput {
+    background-color: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    color: #F8FAFC;
+    font-size: 0.9rem;
+    outline: none;
+    padding: 11px 14px;
+    transition: border-color 0.2s ease;
+    width: 100%;
+}
+
+#searchInput::placeholder {
+    color: #64748B;
+}
+
+#searchInput:focus {
+    border-color: #38BDF8;
+}
+
+/* Category Filter Tabs */
+.category-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px 16px 12px 16px;
+    scrollbar-width: none;
+}
+
+.category-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-btn {
+    background-color: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 20px;
+    color: #94A3B8;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    transition: all 0.15s ease;
+}
+
+.tab-btn.active {
+    background-color: #38BDF8;
+    border-color: #38BDF8;
+    color: #0F172A;
+    font-weight: 700;
+}
+
+/* Vault Program Cards Grid */
+.vault-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    padding: 8px 16px 28px 16px;
+}
+
+.vault-card {
+    background-color: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+    transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.vault-card:hover {
+    border-color: #38BDF8;
+}
+
+.card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.badge {
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    text-transform: uppercase;
+}
+
+.badge.basics {
+    background-color: rgba(56, 189, 248, 0.15);
+    color: #38BDF8;
+}
+
+.badge.loops {
+    background-color: rgba(250, 204, 21, 0.15);
+    color: #FACC15;
+}
+
+.badge.patterns {
+    background-color: rgba(244, 114, 182, 0.15);
+    color: #F472B6;
+}
+
+.badge.arrays {
+    background-color: rgba(74, 222, 128, 0.15);
+    color: #4ADE80;
+}
+
+.badge.oop {
+    background-color: rgba(192, 132, 252, 0.15);
+    color: #C084FC;
+}
+
+.author {
+    color: #64748B;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.vault-card h3 {
+    color: #F8FAFC;
+    font-size: 1.02rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.vault-card p {
+    color: #94A3B8;
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+}
+
+.load-btn {
+    background-color: #38BDF8;
+    border: none;
+    border-radius: 8px;
+    color: #0F172A;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: center;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+    width: 100%;
+}
+
+.load-btn:active {
+    background-color: #0284C7;
+    transform: scale(0.98);
+}
+
+/* Footer */
+.vault-footer {
+    border-top: 1px solid #1E293B;
+    color: #64748B;
+    font-size: 0.78rem;
+    padding: 18px 16px 32px 16px;
+    text-align: center;
+}
