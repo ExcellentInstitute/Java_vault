@@ -2,96 +2,999 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- STRICT ANTI-CACHE META TAGS -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Java Code Vault - Excellent Institute</title>
+    
+    <title>Java Code Vault | Excellent Institute</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header class="vault-header">
-        <div class="brand-box">
-            <h1>Java Code Vault</h1>
-            <p>Excellent Institute • Offline IDE Template Library</p>
+<body class="bg-slate-900 text-slate-200 font-['Plus_Jakarta_Sans',sans-serif] h-screen overflow-hidden flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 p-4 sm:px-6 shadow-lg shrink-0 z-20">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center justify-between w-full sm:w-auto gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 shrink-0">
+                        <i class="fa-brands fa-java text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-extrabold text-white leading-tight">Java Code Vault</h1>
+                        <p class="text-[10px] sm:text-xs text-indigo-400 font-bold uppercase tracking-widest">Excellent Institute</p>
+                    </div>
+                </div>
+                
+                <!-- Mobile Manual Refresh Button -->
+                <button onclick="window.location.reload(true)" class="sm:hidden w-10 h-10 bg-slate-700 rounded-xl flex items-center justify-center text-slate-300 hover:bg-indigo-500 hover:text-white transition-all">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-3 w-full sm:w-72 md:w-96">
+                <!-- Search Bar -->
+                <div class="relative flex-1">
+                    <i class="fa-solid fa-search absolute left-3 top-3 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Search for Java programs..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all placeholder-slate-500">
+                </div>
+                <!-- Desktop Refresh Button -->
+                <button onclick="window.location.reload(true)" class="hidden sm:flex w-11 h-11 bg-slate-700 rounded-xl items-center justify-center text-slate-300 hover:bg-indigo-500 hover:text-white transition-all shrink-0">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
         </div>
-        <button class="refresh-btn" onclick="window.location.reload(true)">↻ Refresh</button>
     </header>
 
-    <div class="search-bar-container">
-        <input type="text" id="searchInput" placeholder="Search Java programs (e.g., Scanner, Loop, Array)..." onkeyup="filterVaultCards()">
+    <!-- Category Filters -->
+    <div class="bg-slate-800/50 border-b border-slate-700/50 shrink-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 overflow-x-auto no-scrollbar flex items-center gap-2" id="categoryContainer">
+            <!-- Categories injected by JS -->
+        </div>
     </div>
 
-    <div class="category-tabs">
-        <button class="tab-btn active" onclick="filterCategory('all')">All</button>
-        <button class="tab-btn" onclick="filterCategory('basics')">Basics</button>
-        <button class="tab-btn" onclick="filterCategory('loops')">Loops</button>
-        <button class="tab-btn" onclick="filterCategory('patterns')">Patterns</button>
-        <button class="tab-btn" onclick="filterCategory('arrays')">Arrays</button>
-        <button class="tab-btn" onclick="filterCategory('oop')">OOP</button>
-    </div>
-
-    <main class="vault-grid" id="vaultGrid">
-        <!-- Card 1: Basics -->
-        <div class="vault-card" data-category="basics" data-keywords="scanner input output welcome">
-            <div class="card-meta">
-                <span class="badge basics">Basics</span>
-                <span class="author">Excellent Institute</span>
+    <!-- Main Content Area (Scrollable Grid) -->
+    <main class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar pb-32">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- Statistics / Counter -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider" id="resultsCount">Loading programs...</h2>
             </div>
-            <h3>1. Interactive Scanner Input</h3>
-            <p>Demonstrates importing Scanner, reading user string input, and printing concatenated results.</p>
-            <button class="load-btn" onclick="loadTemplate('BasicsScanner')">Load into IDE ➔</button>
-        </div>
 
-        <!-- Card 2: Loops -->
-        <div class="vault-card" data-category="loops" data-keywords="for loop while multiplication table">
-            <div class="card-meta">
-                <span class="badge loops">Loops</span>
-                <span class="author">Excellent Institute</span>
+            <!-- Program Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5" id="programGrid">
+                <!-- Cards injected by JS -->
             </div>
-            <h3>2. Multiplication Table</h3>
-            <p>Generates a mathematical multiplication table using a standard Java for-loop.</p>
-            <button class="load-btn" onclick="loadTemplate('MultiplicationTable')">Load into IDE ➔</button>
-        </div>
 
-        <!-- Card 3: Patterns -->
-        <div class="vault-card" data-category="patterns" data-keywords="star pyramid triangle pattern nested loop">
-            <div class="card-meta">
-                <span class="badge patterns">Patterns</span>
-                <span class="author">Excellent Institute</span>
+            <!-- Empty State (Hidden by default) -->
+            <div id="emptyState" class="hidden flex-col items-center justify-center py-20 text-center">
+                <i class="fa-solid fa-ghost text-6xl text-slate-700 mb-4"></i>
+                <h3 class="text-xl font-bold text-slate-300">No programs found</h3>
+                <p class="text-sm text-slate-500 mt-2">Try searching with a different keyword.</p>
             </div>
-            <h3>3. Star Triangle Pyramid</h3>
-            <p>Classic nested for-loop exercise printing a right-angled star triangle pattern.</p>
-            <button class="load-btn" onclick="loadTemplate('StarPattern')">Load into IDE ➔</button>
-        </div>
 
-        <!-- Card 4: Arrays -->
-        <div class="vault-card" data-category="arrays" data-keywords="array search max min statistics">
-            <div class="card-meta">
-                <span class="badge arrays">Arrays</span>
-                <span class="author">Excellent Institute</span>
-            </div>
-            <h3>4. Find Max & Min in Array</h3>
-            <p>Iterates through an integer array to find the highest and lowest values.</p>
-            <button class="load-btn" onclick="loadTemplate('ArrayMaxMin')">Load into IDE ➔</button>
-        </div>
-
-        <!-- Card 5: OOP -->
-        <div class="vault-card" data-category="oop" data-keywords="oop class object student constructor">
-            <div class="card-meta">
-                <span class="badge oop">OOP</span>
-                <span class="author">Excellent Institute</span>
-            </div>
-            <h3>5. Student Class & Object</h3>
-            <p>Object-oriented programming demonstration using constructors, fields, and display methods.</p>
-            <button class="load-btn" onclick="loadTemplate('StudentOOP')">Load into IDE ➔</button>
         </div>
     </main>
 
-    <footer class="vault-footer">
-        <p>© 2026 Excellent Institute, Surada. All rights reserved.</p>
-    </footer>
+    <!-- External Script -->
+    <script src="script.js?v=2"></script>
 
-    <script src="script.js"></script>
+    <!-- ========================================================================================= -->
+    <!-- ⬇️ PASTE NEW JAVA CODES BELOW THIS LINE! ⬇️ -->
+    <!-- ========================================================================================= -->
+
+<script type="text/plain" id="vault-database">
+
+[PROGRAM]
+Title: 1. Product of Two Numbers
+Category: Basics
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Product of Two Numbers ===");
+        System.out.print("Enter first number: ");
+        double num1 = sc.nextDouble();
+
+        System.out.print("Enter second number: ");
+        double num2 = sc.nextDouble();
+
+        double product = num1 * num2;
+        System.out.println("Product of " + num1 + " and " + num2 + " = " + product);
+    }
+}
+
+[PROGRAM]
+Title: 2. Square of a Number (Command Line Arguments)
+Category: Command Line Args
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== Square via Command Line Arguments ===");
+
+        // If running interactively without pre-passed CLI arguments, read args[0] from user
+        if (args.length == 0) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter a number (for args[0]): ");
+            args = new String[]{ sc.next() };
+        }
+
+        int num = Integer.parseInt(args[0]);
+        int square = num * num;
+
+        System.out.println("Number passed (args[0]) : " + num);
+        System.out.println("Square of " + num + "            : " + square);
+    }
+}
+
+[PROGRAM]
+Title: 3. Student Welcome Message (Command Line Arguments)
+Category: Command Line Args
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== Student Welcome (Command Line Args) ===");
+
+        // If running interactively without pre-passed CLI arguments, read args[0] and args[1]
+        if (args.length < 2) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter Student First Name (args[0]): ");
+            String firstName = sc.next();
+            System.out.print("Enter Student Surname (args[1]): ");
+            String surname = sc.next();
+            args = new String[]{ firstName, surname };
+        }
+
+        String name = args[0];
+        String surname = args[1];
+
+        System.out.println("\n-----------------------------------------");
+        System.out.println("Welcome to Excellent Institute, " + name + " " + surname + "!");
+        System.out.println("Wishing you success in your Java course.");
+        System.out.println("-----------------------------------------");
+    }
+}
+
+[PROGRAM]
+Title: 4. Largest of N Natural Numbers
+Category: Loops & Logic
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Largest of N Natural Numbers ===");
+        System.out.print("Enter how many natural numbers (n): ");
+        int n = sc.nextInt();
+
+        if (n <= 0) {
+            System.out.println("Please enter a positive count (n > 0).");
+            return;
+        }
+
+        int largest = 0;
+        for (int i = 1; i <= n; i++) {
+            System.out.print("Enter natural number " + i + ": ");
+            int num = sc.nextInt();
+            if (i == 1 || num > largest) {
+                largest = num;
+            }
+        }
+
+        System.out.println("\nLargest number out of the " + n + " numbers is: " + largest);
+    }
+}
+
+[PROGRAM]
+Title: 5. Fibonacci & Factorial (Recursive & Non-Recursive)
+Category: Recursion & Loops
+Code:
+import java.util.Scanner;
+
+public class Main {
+
+    // Recursive Factorial Function
+    static long factorialRecursive(int n) {
+        if (n <= 1) {
+            return 1;
+        }
+        return n * factorialRecursive(n - 1);
+    }
+
+    // Non-Recursive (Iterative) Factorial Function
+    static long factorialNonRecursive(int n) {
+        long fact = 1;
+        for (int i = 1; i <= n; i++) {
+            fact = fact * i;
+        }
+        return fact;
+    }
+
+    // Recursive Fibonacci Function (returns nth term)
+    static int fibonacciRecursive(int n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+    }
+
+    // Non-Recursive (Iterative) Fibonacci Function
+    static void fibonacciNonRecursive(int terms) {
+        int t1 = 0, t2 = 1;
+        for (int i = 1; i <= terms; i++) {
+            System.out.print(t1 + " ");
+            int next = t1 + t2;
+            t1 = t2;
+            t2 = next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Fibonacci & Factorial (Recursive & Non-Recursive) ===");
+        System.out.print("Enter a non-negative integer for Factorial: ");
+        int num = sc.nextInt();
+
+        System.out.println("Factorial (Non-Recursive) of " + num + " = " + factorialNonRecursive(num));
+        System.out.println("Factorial (Recursive) of " + num + "     = " + factorialRecursive(num));
+
+        System.out.print("\nEnter number of terms for Fibonacci Series: ");
+        int terms = sc.nextInt();
+
+        System.out.print("Fibonacci Series (Non-Recursive) : ");
+        fibonacciNonRecursive(terms);
+
+        System.out.print("Fibonacci Series (Recursive)     : ");
+        for (int i = 0; i < terms; i++) {
+            System.out.print(fibonacciRecursive(i) + " ");
+        }
+        System.out.println();
+    }
+}
+
+[PROGRAM]
+Title: 6. Multiply Two Given Matrices
+Category: Arrays & Matrices
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Matrix Multiplication ===");
+        System.out.print("Enter rows and columns of Matrix 1 (e.g., 2 2): ");
+        int r1 = sc.nextInt();
+        int c1 = sc.nextInt();
+
+        System.out.print("Enter rows and columns of Matrix 2 (e.g., 2 2): ");
+        int r2 = sc.nextInt();
+        int c2 = sc.nextInt();
+
+        if (c1 != r2) {
+            System.out.println("Error! Columns of Matrix 1 must equal Rows of Matrix 2.");
+            return;
+        }
+
+        int[][] mat1 = new int[r1][c1];
+        int[][] mat2 = new int[r2][c2];
+        int[][] prod = new int[r1][c2];
+
+        System.out.println("Enter elements of Matrix 1 (" + r1 + "x" + c1 + "):");
+        for (int i = 0; i < r1; i++) {
+            for (int j = 0; j < c1; j++) {
+                mat1[i][j] = sc.nextInt();
+            }
+        }
+
+        System.out.println("Enter elements of Matrix 2 (" + r2 + "x" + c2 + "):");
+        for (int i = 0; i < r2; i++) {
+            for (int j = 0; j < c2; j++) {
+                mat2[i][j] = sc.nextInt();
+            }
+        }
+
+        // Multiply the two matrices
+        for (int i = 0; i < r1; i++) {
+            for (int j = 0; j < c2; j++) {
+                prod[i][j] = 0;
+                for (int k = 0; k < c1; k++) {
+                    prod[i][j] += mat1[i][k] * mat2[k][j];
+                }
+            }
+        }
+
+        System.out.println("\nProduct of the Two Matrices (" + r1 + "x" + c2 + "):");
+        for (int i = 0; i < r1; i++) {
+            for (int j = 0; j < c2; j++) {
+                System.out.print(prod[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+}
+
+[PROGRAM]
+Title: 7. Sort a Given List of Names in Ascending Order
+Category: Strings & Sorting
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Sort List of Names in Ascending Order ===");
+        System.out.print("Enter number of names: ");
+        int n = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        String[] names = new String[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter name " + (i + 1) + ": ");
+            names[i] = sc.nextLine().trim();
+        }
+
+        // Sorting names alphabetically in ascending order
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (names[i].compareToIgnoreCase(names[j]) > 0) {
+                    String temp = names[i];
+                    names[i] = names[j];
+                    names[j] = temp;
+                }
+            }
+        }
+
+        System.out.println("\n--- Sorted Names in Ascending Order ---");
+        for (int i = 0; i < n; i++) {
+            System.out.println((i + 1) + ". " + names[i]);
+        }
+    }
+}
+
+[PROGRAM]
+Title: 8. Check Whether a String is a Palindrome (Ex: MADAM)
+Category: Strings & Sorting
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== String Palindrome Checker ===");
+        System.out.print("Enter a string (Ex: MADAM): ");
+        String str = sc.nextLine().trim();
+
+        String reverseStr = "";
+        for (int i = str.length() - 1; i >= 0; i--) {
+            reverseStr = reverseStr + str.charAt(i);
+        }
+
+        System.out.println("Entered String  : " + str);
+        System.out.println("Reversed String : " + reverseStr);
+
+        if (str.equalsIgnoreCase(reverseStr)) {
+            System.out.println("Result          : " + str + " is a palindrome.");
+        } else {
+            System.out.println("Result          : " + str + " is NOT a palindrome.");
+        }
+    }
+}
+
+[PROGRAM]
+Title: 9. Read N Values in an Array and Display in Reverse Order
+Category: Arrays & Matrices
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Display Array in Reverse Order ===");
+        System.out.print("Enter number of elements (n): ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter value " + (i + 1) + ": ");
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.print("\nArray elements in original order : ");
+        for (int i = 0; i < n; i++) {
+            System.out.print(arr[i] + " ");
+        }
+
+        System.out.print("\nArray elements in reverse order  : ");
+        for (int i = n - 1; i >= 0; i--) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+}
+
+[PROGRAM]
+Title: 10. Inheritance: AddSub & MulDiv Mathematical Operations
+Category: OOP & Inheritance
+Code:
+import java.util.Scanner;
+
+class AddSub {
+    double a;
+    double b;
+
+    AddSub(double a, double b) {
+        this.a = a;
+        this.b = b;
+    }
+
+    double add() {
+        return a + b;
+    }
+
+    double subtract() {
+        return a - b;
+    }
+}
+
+class MulDiv extends AddSub {
+
+    MulDiv(double a, double b) {
+        super(a, b);
+    }
+
+    double multiply() {
+        return a * b;
+    }
+
+    double divide() {
+        return a / b;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Mathematical Operations Using Inheritance ===");
+        System.out.print("Enter first number: ");
+        double n1 = sc.nextDouble();
+
+        System.out.print("Enter second number: ");
+        double n2 = sc.nextDouble();
+
+        MulDiv obj = new MulDiv(n1, n2);
+
+        System.out.println("\n--- Results ---");
+        System.out.println("Addition       : " + obj.add());
+        System.out.println("Subtraction    : " + obj.subtract());
+        System.out.println("Multiplication : " + obj.multiply());
+        if (n2 != 0) {
+            System.out.println("Division       : " + obj.divide());
+        } else {
+            System.out.println("Division       : Cannot divide by zero!");
+        }
+    }
+}
+
+[PROGRAM]
+Title: 11. Student Class (USN, Name, Branch, Phone, Percentage)
+Category: OOP & Inheritance
+Code:
+import java.util.Scanner;
+
+class Student {
+    String usn;
+    String name;
+    String branch;
+    String phone;
+    double percentage;
+
+    Student(String usn, String name, String branch, String phone, double percentage) {
+        this.usn = usn;
+        this.name = name;
+        this.branch = branch;
+        this.phone = phone;
+        this.percentage = percentage;
+    }
+
+    void display() {
+        System.out.printf("%-12s %-18s %-10s %-14s %.2f%%\n", usn, name, branch, phone, percentage);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Student Records Management ===");
+        System.out.print("Enter number of students (n): ");
+        int n = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        Student[] list = new Student[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nEnter details for Student " + (i + 1) + ":");
+            System.out.print("Enter USN        : ");
+            String usn = sc.nextLine().trim();
+
+            System.out.print("Enter Name       : ");
+            String name = sc.nextLine().trim();
+
+            System.out.print("Enter Branch     : ");
+            String branch = sc.nextLine().trim();
+
+            System.out.print("Enter Phone      : ");
+            String phone = sc.nextLine().trim();
+
+            System.out.print("Enter Percentage : ");
+            double percentage = sc.nextDouble();
+            sc.nextLine(); // Consume newline
+
+            list[i] = new Student(usn, name, branch, phone, percentage);
+        }
+
+        System.out.println("\n======================================================================");
+        System.out.printf("%-12s %-18s %-10s %-14s %-10s\n", "USN", "NAME", "BRANCH", "PHONE", "PERCENTAGE");
+        System.out.println("======================================================================");
+        for (int i = 0; i < n; i++) {
+            list[i].display();
+        }
+        System.out.println("======================================================================");
+    }
+}
+
+[PROGRAM]
+Title: 12. Count Number of Characters, Lines, and Words in a Text
+Category: Strings & Sorting
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Count Characters, Words & Lines in a Text ===");
+        System.out.print("Enter number of lines of text: ");
+        int numLines = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        int charCount = 0;
+        int wordCount = 0;
+        int lineCount = numLines;
+
+        for (int i = 1; i <= numLines; i++) {
+            System.out.print("Enter line " + i + ": ");
+            String line = sc.nextLine();
+
+            charCount += line.length();
+
+            String trimmed = line.trim();
+            if (!trimmed.isEmpty()) {
+                String[] words = trimmed.split("\\s+");
+                wordCount += words.length;
+            }
+        }
+
+        System.out.println("\n--- Text Analysis Result ---");
+        System.out.println("Number of Characters : " + charCount);
+        System.out.println("Number of Words      : " + wordCount);
+        System.out.println("Number of Lines      : " + lineCount);
+    }
+}
+
+[PROGRAM]
+Title: 13. Shape & Circle Subclass (Override getPerimeter & getArea)
+Category: OOP & Inheritance
+Code:
+import java.util.Scanner;
+
+class Shape {
+    double getPerimeter() {
+        return 0.0;
+    }
+
+    double getArea() {
+        return 0.0;
+    }
+}
+
+class Circle extends Shape {
+    double radius;
+
+    Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    double getPerimeter() {
+        return 2 * Math.PI * radius;
+    }
+
+    @Override
+    double getArea() {
+        return Math.PI * radius * radius;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Circle Area & Perimeter (Method Overriding) ===");
+        System.out.print("Enter radius of the circle: ");
+        double r = sc.nextDouble();
+
+        Circle circle = new Circle(r);
+
+        System.out.printf("Radius of Circle    : %.2f\n", r);
+        System.out.printf("Perimeter of Circle : %.2f\n", circle.getPerimeter());
+        System.out.printf("Area of Circle      : %.2f\n", circle.getArea());
+    }
+}
+
+[PROGRAM]
+Title: 14. Employee, Manager & Programmer (Override calculateSalary)
+Category: OOP & Inheritance
+Code:
+class Employee {
+    String name;
+    double basicSalary;
+
+    Employee(String name, double basicSalary) {
+        this.name = name;
+        this.basicSalary = basicSalary;
+    }
+
+    double calculateSalary() {
+        return basicSalary;
+    }
+}
+
+class Manager extends Employee {
+    double allowance;
+
+    Manager(String name, double basicSalary, double allowance) {
+        super(name, basicSalary);
+        this.allowance = allowance;
+    }
+
+    @Override
+    double calculateSalary() {
+        return basicSalary + allowance;
+    }
+}
+
+class Programmer extends Employee {
+    double projectBonus;
+
+    Programmer(String name, double basicSalary, double projectBonus) {
+        super(name, basicSalary);
+        this.projectBonus = projectBonus;
+    }
+
+    @Override
+    double calculateSalary() {
+        return basicSalary + projectBonus;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== Employee Salary Calculation (Method Overriding) ===\n");
+
+        Manager manager = new Manager("Anil Mohanty", 55000.0, 12000.0);
+        Programmer programmer = new Programmer("Sneha Das", 42000.0, 8000.0);
+
+        System.out.println("Role         : Manager");
+        System.out.println("Name         : " + manager.name);
+        System.out.println("Total Salary : Rs. " + manager.calculateSalary());
+
+        System.out.println("-----------------------------------------");
+
+        System.out.println("Role         : Programmer");
+        System.out.println("Name         : " + programmer.name);
+        System.out.println("Total Salary : Rs. " + programmer.calculateSalary());
+    }
+}
+
+[PROGRAM]
+Title: 15. Bank Interface Implemented by SBI and PNB
+Category: Interfaces & Packages
+Code:
+interface Bank {
+    float rate_of_interest();
+}
+
+class SBI implements Bank {
+    String branchName;
+    String branchCode;
+    float rate;
+
+    SBI(String branchName, String branchCode, float rate) {
+        this.branchName = branchName;
+        this.branchCode = branchCode;
+        this.rate = rate;
+    }
+
+    @Override
+    public float rate_of_interest() {
+        return rate;
+    }
+
+    void showBankDetails() {
+        System.out.println("Bank Name        : State Bank of India (SBI)");
+        System.out.println("Branch Name      : " + branchName);
+        System.out.println("Branch Code      : " + branchCode);
+        System.out.println("Rate of Interest : " + rate_of_interest() + "%");
+    }
+}
+
+class PNB implements Bank {
+    String branchName;
+    String branchCode;
+    float rate;
+
+    PNB(String branchName, String branchCode, float rate) {
+        this.branchName = branchName;
+        this.branchCode = branchCode;
+        this.rate = rate;
+    }
+
+    @Override
+    public float rate_of_interest() {
+        return rate;
+    }
+
+    void showBankDetails() {
+        System.out.println("Bank Name        : Punjab National Bank (PNB)");
+        System.out.println("Branch Name      : " + branchName);
+        System.out.println("Branch Code      : " + branchCode);
+        System.out.println("Rate of Interest : " + rate_of_interest() + "%");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== Bank Interface Implementation ===\n");
+
+        SBI sbi = new SBI("Berhampur Main", "SBIN0000033", 7.15f);
+        PNB pnb = new PNB("Bhubaneswar Station", "PUNB0045200", 7.30f);
+
+        sbi.showBankDetails();
+        System.out.println("------------------------------------------");
+        pnb.showBankDetails();
+    }
+}
+
+[PROGRAM]
+Title: 16. Package Program for Book Class & Import Demo
+Category: Interfaces & Packages
+Code:
+// --- File 1: bookpkg/Book.java ---
+package bookpkg;
+
+import bookpkg.Book;
+
+class Book {
+    int bookId;
+    String title;
+    String author;
+    double price;
+
+    public Book(int bookId, String title, String author, double price) {
+        this.bookId = bookId;
+        this.title = title;
+        this.author = author;
+        this.price = price;
+    }
+
+    public void displayBook() {
+        System.out.println("Book ID : " + bookId);
+        System.out.println("Title   : " + title);
+        System.out.println("Author  : " + author);
+        System.out.println("Price   : Rs. " + price);
+        System.out.println("------------------------------------");
+    }
+}
+
+// --- File 2: Main.java (Imports bookpkg.Book) ---
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== Package Program: Book Class ===\n");
+
+        Book b1 = new Book(101, "Programming with Java", "E. Balagurusamy", 550.00);
+        Book b2 = new Book(102, "Head First Java", "Kathy Sierra", 680.00);
+
+        b1.displayBook();
+        b2.displayBook();
+    }
+}
+
+[PROGRAM]
+Title: 17. Cube of a Number Using Package (Various Data Types)
+Category: Interfaces & Packages
+Code:
+// --- File 1: cubepkg/Cube.java ---
+package cubepkg;
+
+import cubepkg.Cube;
+
+class Cube {
+    public int getCube(int n) {
+        return n * n * n;
+    }
+
+    public double getCube(double n) {
+        return n * n * n;
+    }
+
+    public long getCube(long n) {
+        return n * n * n;
+    }
+}
+
+// --- File 2: Main.java (Imports cubepkg.Cube) ---
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== Cube of a Number Across Data Types (Package Demo) ===\n");
+
+        Cube obj = new Cube();
+
+        int intNum = 4;
+        double doubleNum = 3.5;
+        long longNum = 15L;
+
+        System.out.println("Cube of Integer (" + intNum + ")   = " + obj.getCube(intNum));
+        System.out.println("Cube of Double  (" + doubleNum + ") = " + obj.getCube(doubleNum));
+        System.out.println("Cube of Long    (" + longNum + "L) = " + obj.getCube(longNum));
+    }
+}
+
+[PROGRAM]
+Title: 18. Divide by Zero Exception Handling
+Category: Exception Handling
+Code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Divide by Zero Exception Handling ===");
+        System.out.print("Enter first number (numerator): ");
+        int a = sc.nextInt();
+
+        System.out.print("Enter second number (denominator, try 0): ");
+        int b = sc.nextInt();
+
+        try {
+            int result = a / b;
+            System.out.println("Result (a / b) = " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("\nException Caught: Division by zero is not allowed!");
+            System.out.println("Exception Details: " + e);
+        } finally {
+            System.out.println("Finally Block: Program execution finished.");
+        }
+    }
+}
+
+[PROGRAM]
+Title: 19. Throw Exception on Duplicate Integers from User
+Category: Exception Handling
+Code:
+import java.util.Scanner;
+
+class DuplicateValueException extends Exception {
+    DuplicateValueException(String message) {
+        super(message);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Duplicate Integer Exception Demo ===");
+        System.out.print("How many integers do you want to read? ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+
+        try {
+            for (int i = 0; i < n; i++) {
+                System.out.print("Enter integer " + (i + 1) + ": ");
+                int val = sc.nextInt();
+
+                for (int j = 0; j < i; j++) {
+                    if (arr[j] == val) {
+                        throw new DuplicateValueException("Duplicate number detected: " + val);
+                    }
+                }
+                arr[i] = val;
+            }
+
+            System.out.print("\nAll integers are unique: ");
+            for (int i = 0; i < n; i++) {
+                System.out.print(arr[i] + " ");
+            }
+            System.out.println();
+
+        } catch (DuplicateValueException e) {
+            System.out.println("\nException Caught -> " + e.getMessage());
+        }
+    }
+}
+
+[PROGRAM]
+Title: 20. UnderAge Exception Subclass & exceptionDemo
+Category: Exception Handling
+Code:
+import java.util.Scanner;
+
+class UnderAge extends Exception {
+    int age;
+
+    UnderAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Under Age: " + age;
+    }
+}
+
+public class exceptionDemo {
+
+    static void test(int age) throws UnderAge {
+        if (age < 18) {
+            throw new UnderAge(age);
+        } else {
+            System.out.println("Valid Age (" + age + "). Access Granted!");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== UnderAge Custom Exception Demo ===");
+        System.out.print("Enter age to test: ");
+        int age = sc.nextInt();
+
+        try {
+            test(age);
+        } catch (UnderAge e) {
+            System.out.println(e);
+        }
+    }
+}
+
+</script>
 </body>
 </html>
