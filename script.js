@@ -1,181 +1,137 @@
-const JAVA_TEMPLATES = {
-    BasicsScanner: `import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("=== Excellent Institute: Student Portal ===");
-        System.out.print("Enter Student Name: ");
-        String name = sc.nextLine();
-
-        System.out.print("Enter Course (DCA / PGDCA / BCA): ");
-        String course = sc.nextLine();
-
-        System.out.println("\\n--- Registration Confirmed ---");
-        System.out.println("Student : " + name);
-        System.out.println("Course  : " + course);
-        System.out.println("Status  : Active");
-    }
-}`,
-
-    MultiplicationTable: `import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter a number for multiplication table: ");
-        int num = sc.nextInt();
-
-        System.out.println("\\n--- Multiplication Table of " + num + " ---");
-        for (int i = 1; i <= 10; i++) {
-            System.out.println(num + " x " + i + " = " + (num * i));
-        }
-    }
-}`,
-
-    StarPattern: `import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter number of rows (e.g., 5): ");
-        int rows = sc.nextInt();
-
-        System.out.println("\\n--- Star Pyramid Pattern ---");
-        for (int i = 1; i <= rows; i++) {
-            for (int j = 1; j <= i; j++) {
-                System.out.print("* ");
-            }
-            System.out.println();
-        }
-    }
-}`,
-
-    ArrayMaxMin: `public class Main {
-    public static void main(String[] args) {
-        int[] marks = {78, 92, 65, 88, 95, 71, 84};
-
-        int max = marks[0];
-        int min = marks[0];
-        int sum = 0;
-
-        System.out.print("Marks Array: ");
-        for (int i = 0; i < marks.length; i++) {
-            System.out.print(marks[i] + " ");
-            if (marks[i] > max) {
-                max = marks[i];
-            }
-            if (marks[i] < min) {
-                min = marks[i];
-            }
-            sum = sum + marks[i];
-        }
-
-        double average = (double) sum / marks.length;
-
-        System.out.println("\\n\\n--- Array Analysis ---");
-        System.out.println("Highest Mark : " + max);
-        System.out.println("Lowest Mark  : " + min);
-        System.out.println("Average Mark : " + average);
-    }
-}`,
-
-    StudentOOP: `class Student {
-    String name;
-    int rollNo;
-    double percentage;
-
-    Student(String n, int r, double p) {
-        name = n;
-        rollNo = r;
-        percentage = p;
-    }
-
-    void displayDetails() {
-        System.out.println("Roll No    : " + rollNo);
-        System.out.println("Name       : " + name);
-        System.out.println("Percentage : " + percentage + "%");
-        System.out.println("-----------------------------");
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("=== OOP Class & Object Demo ===\\n");
-
-        Student s1 = new Student("Aarav Sharma", 101, 88.5);
-        Student s2 = new Student("Priya Patel", 102, 92.0);
-
-        s1.displayDetails();
-        s2.displayDetails();
-    }
-}`
-};
-
-let activeCategory = "all";
-
-function filterCategory(category) {
-    activeCategory = category;
-
-    const tabButtons = document.querySelectorAll(".tab-btn");
-    tabButtons.forEach((btn) => {
-        const btnText = btn.textContent.trim().toLowerCase();
-        if (btnText === category) {
-            btn.classList.add("active");
-        } else {
-            btn.classList.remove("active");
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Fetch raw data from the hidden script tag
+    const rawData = document.getElementById('vault-database').textContent;
+    
+    // 2. The Foolproof Parser
+    const programs = [];
+    const blocks = rawData.split('[PROGRAM]');
+    
+    blocks.forEach(block => {
+        if (block.trim() === '') return;
+        
+        // Extract Title, Category, and everything after "Code:"
+        const titleMatch = block.match(/Title:\s*(.+)/i);
+        const catMatch = block.match(/Category:\s*(.+)/i);
+        const codeMatch = block.match(/Code:\s*([\s\S]+)/i); 
+        
+        if (titleMatch && codeMatch) {
+            programs.push({
+                id: Math.random().toString(36).substr(2, 9),
+                title: titleMatch[1].trim(),
+                category: catMatch ? catMatch[1].trim() : 'General',
+                code: codeMatch[1].trim()
+            });
         }
     });
 
-    filterVaultCards();
-}
+    // 3. UI Elements
+    const grid = document.getElementById('programGrid');
+    const categoryContainer = document.getElementById('categoryContainer');
+    const searchInput = document.getElementById('searchInput');
+    const emptyState = document.getElementById('emptyState');
+    const resultsCount = document.getElementById('resultsCount');
 
-function filterVaultCards() {
-    const searchInput = document.getElementById("searchInput");
-    const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
-    const cards = document.querySelectorAll(".vault-card");
+    let currentCategory = 'All';
+    let searchQuery = '';
 
-    cards.forEach((card) => {
-        const cardCategory = (card.getAttribute("data-category") || "").toLowerCase();
-        const cardKeywords = (card.getAttribute("data-keywords") || "").toLowerCase();
-        const cardTitle = card.querySelector("h3")
-            ? card.querySelector("h3").textContent.toLowerCase()
-            : "";
-        const cardDesc = card.querySelector("p")
-            ? card.querySelector("p").textContent.toLowerCase()
-            : "";
-
-        const matchesCategory = activeCategory === "all" || cardCategory === activeCategory;
-        const matchesSearch =
-            query === "" ||
-            cardTitle.includes(query) ||
-            cardDesc.includes(query) ||
-            cardKeywords.includes(query);
-
-        if (matchesCategory && matchesSearch) {
-            card.style.display = "flex";
-        } else {
-            card.style.display = "none";
-        }
-    });
-}
-
-function loadTemplate(templateKey) {
-    const code = JAVA_TEMPLATES[templateKey];
-    if (!code) {
-        return;
-    }
-
-    if (window.AndroidIDE && typeof window.AndroidIDE.loadCode === "function") {
-        window.AndroidIDE.loadCode(code);
-    } else if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(code).then(() => {
-            alert("Code copied to clipboard! (Open inside the Java Compiler Android app to inject directly into the IDE).");
+    // 4. Generate Categories dynamically based on your text entries
+    const categories = ['All', ...new Set(programs.map(p => p.category))];
+    
+    function renderCategories() {
+        categoryContainer.innerHTML = '';
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            const isActive = cat === currentCategory;
+            
+            btn.className = isActive 
+                ? 'px-4 py-1.5 rounded-full text-xs font-bold bg-indigo-500 text-white shadow-md transition-all whitespace-nowrap'
+                : 'px-4 py-1.5 rounded-full text-xs font-bold bg-slate-700/50 text-slate-300 hover:bg-slate-700 transition-all whitespace-nowrap border border-slate-600';
+            
+            btn.innerText = cat;
+            btn.onclick = () => {
+                currentCategory = cat;
+                renderCategories();
+                renderGrid();
+            };
+            categoryContainer.appendChild(btn);
         });
-    } else {
-        alert("Open this Vault inside the Java Compiler Android app to load templates directly.");
     }
-}
+
+    // 5. Render Program Cards
+    function renderGrid() {
+        grid.innerHTML = '';
+        
+        const filtered = programs.filter(p => {
+            const matchesCat = currentCategory === 'All' || p.category === currentCategory;
+            const matchesSearch = p.title.toLowerCase().includes(searchQuery) || p.code.toLowerCase().includes(searchQuery);
+            return matchesCat && matchesSearch;
+        });
+
+        resultsCount.innerText = `${filtered.length} Program${filtered.length !== 1 ? 's' : ''} Available`;
+
+        if (filtered.length === 0) {
+            emptyState.classList.remove('hidden');
+            emptyState.classList.add('flex');
+        } else {
+            emptyState.classList.add('hidden');
+            emptyState.classList.remove('flex');
+            
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'program-card bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden flex flex-col h-full';
+                
+                // Escape code for HTML display
+                const safeCode = p.code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+                card.innerHTML = `
+                    <div class="p-5 border-b border-slate-700/50 flex justify-between items-start gap-2">
+                        <div>
+                            <h3 class="font-bold text-slate-100 text-base leading-tight">${p.title}</h3>
+                            <span class="inline-block mt-2 px-2 py-0.5 bg-slate-900 text-indigo-400 border border-slate-700 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                                ${p.category}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 flex-1 bg-slate-800/50">
+                        <div class="code-preview custom-scrollbar">${safeCode}</div>
+                    </div>
+                    
+                    <div class="p-4 border-t border-slate-700/50 bg-slate-900/50 mt-auto">
+                        <button onclick="sendToApp('${p.id}')" class="btn-load w-full py-3 bg-slate-700 text-slate-200 font-bold rounded-xl text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> Load to Workspace
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+    }
+
+    // 6. Connect the Search Bar
+    searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase();
+        renderGrid();
+    });
+
+    // 7. Communication Bridge to Android App!
+    window.sendToApp = function(id) {
+        const program = programs.find(p => p.id === id);
+        if (!program) return;
+
+        // Check if the webpage is running inside our Android App's WebView
+        if (window.AndroidIDE && window.AndroidIDE.loadCode) {
+            window.AndroidIDE.loadCode(program.code);
+        } else {
+            // Fallback: If opened in a normal Chrome desktop browser, just copy to clipboard
+            navigator.clipboard.writeText(program.code).then(() => {
+                alert(`"${program.title}" copied to clipboard! (Open inside the Java Compiler IDE app to load automatically).`);
+            });
+        }
+    };
+
+    // Initialize
+    renderCategories();
+    renderGrid();
+});
